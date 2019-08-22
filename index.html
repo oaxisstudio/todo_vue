@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://use.typekit.net/vzy2key.css">
+  <link rel="stylesheet" href="dist/css/reset.css">
+  <link rel="stylesheet" href="dist/css/app.css">
+  <script src="https://use.fontawesome.com/e3ae05b8e6.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <main id="todo">
+    <h1 class="mainTitle">TO DO LIST</h1>
+    <div class="form">
+      <div class="inputArea">
+        <input type="text" class="inputText" v-on:keyup.shift.enter="doAdd()" value="" ref="text"
+          placeholder="TODOを入力(Shift+Enterで確定)">
+        <div class="inputTextWrapper">
+        </div>
+        <span class="errorMessage">入力が空です</span>
+      </div>
+      <button class="button button-large" v-on:click="doAdd()">TODOを追加</button>
+    </div>
+
+    <div class="searchBox">
+      <i class="fa fa-search searchBox__icon" aria-hidden="true"></i>
+      <input type="text" class="searchBox-input" value="" placeholder="ここに絞り込みたいキーワードを入力する" v-model="searchText"
+        ref="searchText">
+    </div>
+
+    <ul>
+      <li class="list-item" v-for="(item, index) in filteredItems" v-bind:key="item.id" v-bind:index="index"
+        v-bind:class="{listItemDone: item.done}">
+        <i v-if="item.done" class="fa fa-check-square icon-check" aria-hidden="true" v-on:click="onDoneItem(item)"></i>
+        <i v-else class="fa fa-square-o icon-check" aria-hidden="true" v-on:click="onDoneItem(item)"></i>
+        <span class="js-todo-text" v-show="item.edit==0" v-on:click="onEditItem(item)">{{item.text}}</span>
+        <input type="text" class="editTextt" v-show="item.edit==1" v-model="item.text"
+          v-on:keyup.shift.enter="onEditText(item)">
+        <i class="fa fa-trash icon-trash" aria-hidden="true" v-on:click="onDeleteItem(item)"></i>
+      </li>
+    </ul>
+  </main>
+
+
+  <script src="dist/js/bundle.js"></script>
+</body>
+
+</html>
